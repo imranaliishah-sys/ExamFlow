@@ -10,21 +10,11 @@ const connectDB = require('./config/db');
 const app = express();
 
 // CORS Configuration
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://exam-flow-sigma.vercel.app',
-  'https://exam-flow-7tn5.vercel.app'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: true,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Request Body Limits
