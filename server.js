@@ -11,13 +11,24 @@ connectDB();
 const app = express();
 
 // CORS Configuration
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://exam-flow-sigma.vercel.app',
+  'https://exam-flow-7tn5.vercel.app'
+];
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
 // Request Body Limits
-// Base64 image can be larger than the original image
 app.use(express.json({ limit: '4mb' }));
 
 app.use(express.urlencoded({
